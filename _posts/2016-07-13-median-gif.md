@@ -2,8 +2,10 @@
 layout: post
 title: "median.gif"
 date: '2016-07-13'
-description: "Median blending gifs."
+description: "Median blending gifs"
 series: gif
+titleImage:
+    file: "main.gif"
 ---
 
 {% include image.html file="main.gif" %}

@@ -2,7 +2,10 @@
 layout: post
 title: "I Don't Know How We Can See Each Other Through All This Blood"
 date: '2016-09-22'
-description: "Using my heartbeat to modulate my vision."
+description: "Using my heartbeat to modulate my vision"
+series: modded_reality
+titleImage:
+    file: "mirror-red.gif"
 ---
 
 {% include image.html file="mirror-red.gif" %}
@@ -14,7 +17,7 @@ So, taken with a fit of self-quantification, and building on my [initial work in
 More so than any dull numbers or graphs, this device makes you acutely aware of your body and its autonomic functioning. Perhaps too aware. Watching my heart beat was, if anything, extremely stressful, as I grew ever more convinced that each beat would surely be my last. Still, the experience suggests some neat ways to remix senses and biosignals, so allow me to detail the implementation and share my experience.
 
 
-## Overview
+# Overview
 This experiment builds on the same hardware and software framework as [my hands-for-eyes project][eyes], so let's skip over the basics to look at the new and interesting bits.
 
 The high level design was this:
@@ -27,7 +30,7 @@ The high level design was this:
 <!--* Kill Hitler.-->
 
 
-## Vision
+# Vision
 This time around, rather than getting all creative, I decided to match the tried-and-true, socket in skull vantage that most people know and love. In some ways, this view was actually far more problematic than some of the others I previously explored, as it is so familiar that emulating it can quickly fall into an uncanny valley.
 
 My first attempt mounted a [usb fisheye camera](https://www.amazon.com/dp/B00LQ854AG/) to the front of the Cardboard unit.
@@ -42,14 +45,14 @@ Take resolution. A regular iPhone 6 delivers, at best, well under half the pixel
 
 {% include image.html file="cardboard-top.jpg" %}
 
-Then there's the latency. The need for low latency in virtual reality is fairly well documented, and many of those learnings also apply to this setup. While 100ms lag is not terrible – and is, in some ways, not as bad as a 100ms delay in truly immersive VR – there is a slight mismatch between your senses and your vision. Everything just feels a little off.
+Then there's the latency. The need for low latency in virtual reality is fairly well documented, and many of those learnings also apply to this setup. While 100ms lag is not terrible—and is, in some ways, not as bad as a 100ms delay in truly immersive VR—there is a slight mismatch between your senses and your vision. Everything just feels a little off.
 
 To improve latency, I also tried using the iPhone's forward facing camera directly. This is far easier to set up and works fairly well, although you do have to slice up the Cardboard a bit to expose the phone's camera. This pipeline also has well under a quarter of the latency.
 
 The downsides are that the iPhone camera is mounted fairly far to the side of your head, so the view moves about oddly when you turn your head about. And, even on its widest, the iPhone lens is just not quite wide enough to provide convincing immersion. A fisheye or wide angle lens adapter would do the trick, but mounting such nonsense to a phone is just plain silly. Far better methinks to tether your iPhone a Raspberry Pi that you are wearing as a backpack, and stream video from the Pi to your phone using a usb webcam.
 
 
-## Heart Beat Sensor
+# Heart Beat Sensor
 When it comes to heart sensors, the vast majority of wearables and sensors only expose higher level data, such as heart rate. This was a little too indirect for my liking. I wanted to detect each and every heartbeat in almost realtime, and use the individual beats to modify my vision. 
 
 To accomplish this, I opted to use the aptly named [Pulse Sensor][pulse]. This small analog sensor measures light absorption in skin to indirectly track heart beats, and, while not terribly accurate or reliable, it works well enough.
@@ -72,7 +75,7 @@ I'm using the same Pi backpack mount described previously, but now with a breadb
 I attached the Pulse Sensor to my earlobe. It takes a lot of trial and error to get the sensor to work reliably, but, when properly adjusted, it did seem to match my pulse fairly well. 
 
 
-## Software
+# Software
 The Pi has two jobs, streaming video from the camera and collecting heartbeat data. Streaming uses [mjpeg-streamer](https://github.com/jacksonliam/mjpg-streamer):
 
 ```bash
@@ -91,7 +94,7 @@ I wanted to use an OpenGL shader on the video stream. To do this, the mjpeg imag
 The heartbeat events update uniforms on the shaders to modify the view. Each heartbeat also triggers a *\*ping\** sound, which is altogether essential when dealing with anything medical.
 
 
-## And I Can See My Heartbeats
+# And I Can See My Heartbeats
 My first experiment visualized heartbeats as rushes of blood.
 
 {% include image.html file="red-example.png" %}
@@ -100,7 +103,7 @@ Beats are shown as a red vignette on the screen, which quickly fades out before 
 
 After slipping the headset on, it took the pulse sensor around ten seconds or so to stabilize and start picking up my heart beat reliably. The rate was a little under once a second, around 80bmp.
 
-The red flashing did capture my attention for a moment, but then faded from notice while the beeping became part of the background noise. You would naturally expected that it would be very hard to see much of anything through all that red – just as you would expect that all that incessant pumping of blood and throbbing of organs would, given their vital nature, dominate one's concerns – but, such matters quickly took a back seat as I began to explore and observe the world about me. 
+The red flashing did capture my attention for a moment, but then faded from notice while the beeping became part of the background noise. You would naturally expected that it would be very hard to see much of anything through all that red—just as you would expect that all that incessant pumping of blood and throbbing of organs would, given their vital nature, dominate one's concerns—but, such matters quickly took a back seat as I began to explore and observe the world about me. 
 
 Walking about and interacting with the world was fairly easy and familiar, since the camera perspective at least somewhat matches normal vision. The latency however is noticeable, especially when I quickly turned my head.
 
@@ -121,7 +124,7 @@ And soon, the red flashing inexplicably began to speed up again. But instead of 
 For some reason, it took me a surprisingly long time to remember that I could just remove the headset and blissfully return to denying my mortality.
 
 
-## My Heart Beats and I Can See
+# My Heart Beats and I Can See
 {% include image.html file="mirror-black.gif" %}
 
 But perhaps I was thinking about heartbeats all wrong. Instead of associating them with blood and mortality, as my first experiment did, consider that without a heartbeat, there'd be no vision  at all. It's the absence of a heartbeat that should really concern us, not its presence. So I decided to reverse things a bit.
@@ -140,7 +143,7 @@ I soon became more confident stitching together a model of the world during the 
 Perhaps watching my heartbeat was now a bit old hat, or perhaps because this view was more obtrusive and because it used black instead of red, but I never found myself growing concerned the same way I did previously. It was just fun to watch the flashings increase and decrease as I navigated my body about the world. 
 
 
-## Thoughts
+# Thoughts
 Although this device did a great job letting me know that I was alive, I can't help but feel that it's best not to be constantly reminded of such things. Better perhaps to just enjoy the experience, and worry about the hows and whys later.
 
 I am biased of course, but I also feel the device offers an interesting take on self-quantification. For me, the movement's traditional obsession with data and optimization reeks of immortality, and most devices for the purpose are just plain boring. This device on the other hand makes you more aware of your body, in a much more direct and enlightening way. It's one thing to read `65bpm` on a screen, and quite another to see the world flash into existence each time your heart beats, and to see this happen sixty five times a minute. I certainly know which one I find more truthful, even if I don't always like what this truth suggests.

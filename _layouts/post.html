@@ -3,36 +3,40 @@ layout: default
 ---
 
 <div class="toc-container">
-    <nav class="toc">
+    <nav class="toc hidden">
         <h1 class="toc-root"><a href="#">#</a></h1>
         <div class="toc-content"></div>
     </nav>
 </div>
 
-<div class="wrapper-masthead">
-  <div class="container">
-    <header class="masthead clearfix">
-      <a href="{{ site.baseurl }}/" class="site-avatar">
+<header class="masthead">
+    <a href="{{ site.baseurl }}/" class="site-avatar">
         <img src="/images/uwtb-post.svg" alt="UWTB" />
-      </a>
-    </header>
-  </div>
-</div>
+    </a>
+</header>
 
-<article role="main" class="main post post-main container">
-    <header>
-        <h1 class="post-title">{{ page.title }}</h1>
+<article role="main" class="main post container {{ page.type }}">
+    <header class="post-header">
+        {% if page.titleImage and page.titleImage.replacePageTitle %}
+            {% capture image_src %}{% if page.titleImage.file %}/content/{{ page.path | remove_first:'_posts/' | split:'.' | first }}/{{ page.titleImage.file }}{% else %}{{ page.titleImage.url }}{% endif %}{% endcapture %}
+            <div class="post-preview-image container">
+                <a href="{{ site.baseurl }}{{ page.url }}">
+                    <img src="{{ image_src }}" alt="{{ page.title }}" />
+                </a>
+            </div>
+        {% else %}
+            <h1 class="post-title">{{ page.title }}</h1> 
+        {% endif %}
+
         <div class="post-meta">
-            <time>{{ page.date | date: "%B %e, %Y" }}</time>
+            <time datetime="{{ page.date | date_to_xmlschema}}">{{ page.date | date: "%B %e, %Y" }}</time>
             {% if site.data.series[page.series] %}
                 &mdash; <a class="channel-link" href="/series/{{ page.series }}">{{ site.data.series[page.series].name }}</a>
             {% endif %}
         </div>
     </header>
-    
-    <div class="entry">
-        <div class="content">{{ content }}</div>
-    </div>
+
+    {{ content }}
 
     <footer class="post-footer">
         <nav class="post-nav clearfix">
@@ -47,16 +51,16 @@ layout: default
                 {% endif %} 
             </div>
         </nav>
-        <a class="edit-link" href="https://github.com/mattbierner/blog.mattbierner.com/blob/gh-pages/{{page.path}}">Suggest an edit on Github</a>
+        <a class="edit-link" href="https://github.com/mattbierner/blog.mattbierner.com/issues/new">Leave a comment or share feedback on github</a>
     </footer>
 </article>
 
 <nav class='post-pagination body-pagination'>
     {% if page.previous.url %} 
-    <a title="Previous Post" href="{{page.previous.url}}" class="post-pagination-link prev-post"></a>
+    <a title="Previous: {{ page.previous.title}}" href="{{page.previous.url}}" class="post-pagination-link prev-post"></a>
     {% endif %}
     {% if page.next.url %} 
-    <a title="Next Post" href="{{page.next.url}}" class="post-pagination-link next-post"></a>
+    <a title="Next: {{page.next.title}}" href="{{page.next.url}}" class="post-pagination-link next-post"></a>
     {% endif %} 
 </nav>
 

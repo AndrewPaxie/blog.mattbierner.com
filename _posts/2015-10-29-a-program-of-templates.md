@@ -1,11 +1,13 @@
 ---
 layout: post
+type: story
 title: A Program of Templates
-date: '2015-10-29 03:11:21'
+date: '2015-10-29'
 series: halloween
 description: Happy Halloween!
 ---
-<h1 align="center">I</h1>
+
+# I
 I awake alone, to a house in silence. The dying fragments of an unspeakable dream still hang in the cool night air, and I lie entranced for a time – heart pounding – half trying to remember that nightmare, half frightened of what such remembrance may hold. A stabbing headache draws me back to reality. My trusty Nokia Communicator reads ten o'clock, December 31st, 1999. New Year's Eve. How did I come to be here and what became of the Lisp expedition? I last remember hacking through that accursed swamp – rations dwindling, fever growing stronger by the hour – but since then? A blank, a void of shifting shadow filled with unintelligible urges and alien sensations just beyond my waking comprehension. Yet one thought cuts through this fog with vital urgency: Edwin and Enoch, my children. 
 
 Distant melodic thumps of bass and distorted bursts of drunken merriment waft through the open windows; echoes from another world. Indeed, everyone in the great city of Lambda – heart of the Functional empire – seems to be out celebrating the coming millennium. And yet my thoughts are only of my children. They are vitality and purity made flesh, two pieces of my heart beating outside my body. I can still see their eager eyes staring up at me as I explained the art of function currying to them for the first time. After Lily's passing, I used to tiptoe into their room every night just to make sure they were safe. I would never have been able to go on without them.
@@ -42,18 +44,18 @@ There was something not unfamiliar about that screen name, but who is this Ceppi
 
 Where once there was one mystery, now there are many. Foremost, who is this Ceppix and what is his relationship to me and my children? I can't help but feel that we have met before. He addresses me so familiarly... A former employee or acquaintance? But then why such secrecy? Yet I am ready to follow any lead to find my children, no matter what depths and darknesses it may pull me to. Thus, it is decided. I place myself in your trust dear Ceppix. Fate binds us together, two strangers hurtling through the night, towards destiny.
 
-Through the bedroom window, Researchdome blots out a patch of the sky. The real campus though lies deep underground. Those same paternal instincts pull me onwards towards that dome. I rush downstairs and outside into the crisp courtyard air, through the gate, and onto the derelict campus of the Mandus Programming Company.
+Through the bedroom window, Researchdome blots out a patch of the sky. The real campus though lies deep underground. Those same paternal instincts pull me onwards towards that dome. I rush downstairs and outside into the crisp courtyard air, through the gate, and onto the derelict campus of the Mandus Data Processing.
 
 Oh, Edwin and Enoch! What wonders stand before you? What fabulous discoveries lie forgotten in the darkness below? Safely tucked away from the world, only the saboteur stands between us. I will deal with him. Then, let us walk through that wondrous dreamscape together.
 
-<h1 align="center">II</h1>
-Father built the Mandus Programming Company through sheer force of will. While I was his heir, the Company was always his firstborn and favorite. And with the IPO in 1982, he finally had the capital he needed to realize his vision. On the outskirts of Lambda, he brought together the most forward-thinking technologists, urban planners, artists, and social scientists to build a campus of continuous innovation and invention. No expense was spared. The massive geodesic Researchdome is the heart of campus, rings of office buildings radiating outwards along spokes of walkways and parks. At the edge of the circle lie the chic shopping districts and posh dormitories, built exclusively for the programmers and their families. "Now they will never have to stop working", he used to laugh. The look in his eyes told that he was only half joking. As a sign of good faith, he even moved our family into a sprawling compound on the east side of campus. It was an exciting time and place to grow up.
+# II
+Father built the Mandus Data Processing through sheer force of will. While I was his heir, the Company was always his firstborn and favorite. And with the IPO in 1982, he finally had the capital he needed to realize his vision. On the outskirts of Lambda, he brought together the most forward-thinking technologists, urban planners, artists, and social scientists to build a campus of continuous innovation and invention. No expense was spared. The massive geodesic Researchdome is the heart of campus, rings of office buildings radiating outwards along spokes of walkways and parks. At the edge of the circle lie the chic shopping districts and posh dormitories, built exclusively for the programmers and their families. "Now they will never have to stop working", he used to laugh. The look in his eyes told that he was only half joking. As a sign of good faith, he even moved our family into a sprawling compound on the east side of campus. It was an exciting time and place to grow up.
 
 Where once thirty thousand programmers worked and ate and lived, I alone now walk. This arterial pathway should take me directly to Researchdome, although something compels me to stick to the shadow and creep slowly along. I know it had been bad, but this is beyond anything I had imagined. The gardens are overgrown with vile weeds, metal sculptures and other works of corporate art lie twisted and rusting into the earth, and the opulent marble facades of the office buildings are covered with barbs of hateful looking graffiti. In the starlight, the lines of black spray paint dance and contort into uncomfortable forms that I dare not study in any detail. A charred pile of timbers and melted plastic is all that remains of the Building 6 coffee house. Lily... Our first date... The memories are still too raw. My boys need me. Press on Mandus! Press on!
 
-Beyond the last ring of hulking office buildings lies the company forum. Staring across its vast emptiness, I could still recall the first time I nervously addressed the programmers as their CEO. It was the role my father had groomed me for since birth, but one I never felt comfortable accepting. Still, by the mid-nineties, the aurae of the Mandus Programming Company was fading. Our stock was flat and young upstarts were cutting into our core businesses. So when Father passed away in early 1996, the responsibility of reinvigorating the company suddenly fell on me.
+Beyond the last ring of hulking office buildings lies the company forum. Staring across its vast emptiness, I could still recall the first time I nervously addressed the programmers as their CEO. It was the role my father had groomed me for since birth, but one I never felt comfortable accepting. Still, by the mid-nineties, the aurae of the Mandus Data Processing was fading. Our stock was flat and young upstarts were cutting into our core businesses. So when Father passed away in early 1996, the responsibility of reinvigorating the company suddenly fell on me.
 
-Things were far worse than I had imagined. As far as I could tell, the Mandus Programming Company had never been profitable. It wasn't even clear what the company did anymore, it's distended finances dependent on acquisitions and accounting slight of hand just to keep limping along. How had Father kept it up? No matter, I would not let him down. I threw myself body and soul into saving the company.
+Things were far worse than I had imagined. As far as I could tell, the Mandus Data Processing had never been profitable. It wasn't even clear what the company did anymore, it's distended finances dependent on acquisitions and accounting slight of hand just to keep limping along. How had Father kept it up? No matter, I would not let him down. I threw myself body and soul into saving the company.
 
 One hundred plus hour work weeks became normal, and my life was reduced to work and sleep. I forgot the meaning of weekends, of relaxation, of friends and family. Maybe if I had been more present, Lily would still be with us. She at least would have never let me go on that damned Lisp expedition. I only undertook it out of necessity, an all or nothing attempt to save the company based only on the mutterings of [my insane Great-Uncle][lispers]. And the boys needed an adventure. They were so stoic, so brave, but I could tell that the sudden loss of their mother still wore hard on them.
 
@@ -65,14 +67,14 @@ But what is this? Another one of those sickly green screens rests out in the mid
 >
 > Ceppix (10:20.17) - Only you can enter the command. Only The Program can free them. 
 
-Hearing his words in this place brings on unexpected anger... Still weak and feverish, I surveyed the few thousand remaining employees. Parasites! Dirty little beasts! Content in the miserable spoils of their multi-paradigmism, they look to Us for salvation. Well, We will save them all right! We laid out a bold vision that day; no more to be bound by traditional functionalism, shackled to the list, slave to the declarative. The Mandus Programming Company would leverage all of its remaining assets to boldly pursue a *new* type of programming. Into the very earth, beneath the rot and decay of the past, We would build The Program, hidden from the judging and hateful glare of the world... Somewhere in The Program, in the unknown depths beneath my very feet, my dearest Edwin and Enoch lie trapped by that wicked saboteur.
+Hearing his words in this place brings on unexpected anger... Still weak and feverish, I surveyed the few thousand remaining employees. Parasites! Dirty little beasts! Content in the miserable spoils of their multi-paradigmism, they look to Us for salvation. Well, We will save them all right! We laid out a bold vision that day; no more to be bound by traditional functionalism, shackled to the list, slave to the declarative. The Mandus Data Processing would leverage all of its remaining assets to boldly pursue a *new* type of programming. Into the very earth, beneath the rot and decay of the past, We would build The Program, hidden from the judging and hateful glare of the world... Somewhere in The Program, in the unknown depths beneath my very feet, my dearest Edwin and Enoch lie trapped by that wicked saboteur.
 
 While typing out a reply, something catches my ear. There it is again! Faint but distinct. Footsteps! But footsteps of *what* I dare not imagine. They clomp and strut along like some accursed faun, yet whoever or whatever was out there consciously keeps itself in the shadows just beyond my sight. "Who's there?", I call out nervously, "Everyone's been laid off. The stock options are worthless. There's no more work here!". The footsteps stop but there is no response. Silence is somehow infinitely worse. At least before I knew roughly where that thing was.
 
 I desperately want to question Ceppix further, but the lofted entryway of Researchdome lies within sight and I have little desire to linger outside any longer.
 
-<h1 align="center">III</h1>
-Even in its degraded state, the eight story geodesic Researchdome still inspires awe. Its shell is made entirely of glass and most of the walls and supports inside are similarly transparent. At night as a child, I remember how the brightly lit floors almost seemed to float suspended in space. Such transparency was more than aesthetic. Every employee was encouraged to bring their ideas to the lab and use its resources to turn them into products. The Mandus Programming Company had a strong hacker culture and the Researchdome games were always the highlight of the year. I can still hear Father's booming voice announce, "Ladies and gentlemen, boys and girls... codin' time's here!" Outside of the games, any given Saturday evening found the lab just as packed as during normal work hours. Employees were encouraged to spend all of their free time here. Father of course made sure that the company owned everything produced in the lab.
+# III
+Even in its degraded state, the eight story geodesic Researchdome still inspires awe. Its shell is made entirely of glass and most of the walls and supports inside are similarly transparent. At night as a child, I remember how the brightly lit floors almost seemed to float suspended in space. Such transparency was more than aesthetic. Every employee was encouraged to bring their ideas to the lab and use its resources to turn them into products. The Mandus Data Processing had a strong hacker culture and the Researchdome games were always the highlight of the year. I can still hear Father's booming voice announce, "Ladies and gentlemen, boys and girls... codin' time's here!" Outside of the games, any given Saturday evening found the lab just as packed as during normal work hours. Employees were encouraged to spend all of their free time here. Father of course made sure that the company owned everything produced in the lab.
 
 It is odd. The building both repulses me and draws me in, like a hyperlink to one of those horrible shock websites. No good awaits inside, and yet I must proceed.
 
@@ -106,7 +108,7 @@ While it was bad enough to look upon such a monstrosity, its suggestion of a hum
 
 I am close now. Deeper, ever deeper. 
  
-<h1 align="center">IV</h1>
+# IV
 Tangled bunches of wire run downwards and all but choke off the passage; their subtile snakelike hiss hinting at the toxic data they carry. Limestone gives way to basalt and the jagged nature of the shaft suggests a volcanic vent more than any work of man.
 
 I step down but my foot finds nothing. With a sharp gasp, I cling to the ladder and take a moment to recover myself. Did I miss a side passage somewhere? But the walls are solid. Carefully, I lower myself to the lowest rung, hoping to spot something in the darkness below. By the dim light of my Communicator, I can just make out a few fastenings that should support the ladder. The clean nature of the break and shiny burrs suggests that this had been no accident. The saboteur! Still, down seems to be the only way forward. I gingerly grab a thick bundle of wire and lift myself up until the ladder no longer supports my weight. The wires stretch and creak but hold firm, so I continue my descent in this matter.
@@ -133,7 +135,7 @@ My vision narrows until only the unchanging faces of my children float in the da
 
 In dreams I walk with you. In dreams I talk to you. In dreams you're mine, all of the time. In dreams. Only in dreams.
 
-<h1 align="center">V</h1>
+# V
 Dim points of light flicker softly in the black void above. It takes me a few moments to realize that I am no longer underground but looking up at the night sky. Do beings live out there among the stars? I pray to God that it is a cold and dead universe that we too may one day join. A brilliant explosion jolts me fully awake and fills the sky with a rainbow of sparks. My Communicator reads 12:01. The new millennium is upon us, the millennium of Ceppix. 
 
 A small shadow dashes across the road in front of me, followed closely behind by a hulking form. One of those beasts, but out here in the city! I recognize the neighborhood too. Lily and I used to walk these streets together, and enjoy stopping in all the quaint shops. But the place is now a waking nightmare.  Packs of the beasts run from home to home, while others busy themselves graffitiing every surface with those hateful symbols – *for*, *do*, *class*, ... – until it all strings together into a program of obscene verbosity and complexity that defies any functional comprehension. Oh no. Oh God no. What have I done?! 
@@ -162,7 +164,7 @@ Remaining here any longer is just too dangerous. I think again of that trapdoor,
 
 It is almost relieving to be back in the dark subterranean chambers of the New Campus. I grab a wrench and survey the row of cages stretching off down the hallway, ready and waiting. A sound like the ocean, a billion keyboards clacking. Of what could they be hacking? Are they SYNing, are they ACKing? Are their commits source a-tracking? The light is truly lacking, so the danger must be stacking! Is the grisly codebase plaquing?! Are immortal souls a-cracking?! Yes!!! My fear is surely stacking, 'cause the hackers keep on hacking!
 
-<h1 align="center">VI</h1>
+# VI
 Lily, my sweetest Lily, how had it come to this? It all leads back to that night, your final night on earth. You came to me whispering words of blasphemy, arrayed in *var* and decked with *function*, the golden brackets in your hands full of the abominations and filthiness of your *object orientation*. I managed to quiet you before you awoke the boys, and quickly called a doctor, but the ECMA had spread too widely. At least your suffering is over now... Edwin and Enoch can remember you as you were before. But me? Even my happiest memories are tainted by those last few painful hours. Why didn't I notice the signs? That you may not see what I have seen, hear what I have heard; rest forever contented knowing that I will save them. I will save them all.
 
 Blue light flashes from a side passage. I tighten my grip on the wrench. On a small stage at the front of the room stands one of those beasts. The wall behind him glows with the hateful symbols but, by now, I am more used to the sight of *C++* and can better control the sickness it instinctively brings on. The audience is not so fortunate. They strain at their bonds and let out tortured moans through their gags, and I watch the last few struggle vainly as the beasts fasten them into their plastic folding chairs. I know some of the faces too! Old employees and shopkeepers from the city! And now the presentation truly begins.
@@ -197,7 +199,7 @@ I watch Mandus rage in denial. I watch Mandus sink to his knees and sob. There i
 
 Sprinkle stardust in their tea so that they may dream forever. Two limp forms on the alter. Little chests rise and fall. The first rays of the sun... it'll all be worthwhile, he whispers.
 
-<h1 align="center">VII</h1>
+# VII
 The black pyramid. Blue waters cascade from its apex. Their small bodies hold so much of the stuff, almost black by the dawn light as it seeps into those engravings...
 
 I am Ceppix's instantiation.
@@ -224,13 +226,13 @@ Mechanically, I take my throne. I love you my darlings and I am sorry, I simply 
 
 The pulse of the green cursor. It's a UNIX system. I know this. I rest my hands on the keyboard and begin, **S**, **U**, **D**, **O**. "Please Mandus no, for your children!", he begs one last time. I pause. With these keys I can destroy The Program or unleash its full potential on the world, I can bring untold pain or joy to millions, I can fashion myself as a god! But to be god of such a world? And without them? 
 
-My fingers shake as I tap out the next few letters: **R**, **M**. The blades slide into position above my wrists, ready to drain the blue liquid where it will flow into the night sky and be forever lost. **-**, **R**, **F**. He is silent now. There is nothing left to say: **~**
+My fingers shake as I tap out the next few letters: **R**, **M**. The blades slide into position above my wrists, ready to drain the blue liquid where it will flow into the night sky and be forever lost. **-**, **R**, **F**. He is silent now. There is nothing left to say: **/**
 
 Only in dreams, in beautiful dreams.
 
 **ENTER** 
 
------
+<hr class="end">
 
 <i>Plot remixed with love from <a href="http://aamfp.com/">A Machine for Pigs</a>, including a few of the more dramatic quotes altered for humorous effect.</i>
 
