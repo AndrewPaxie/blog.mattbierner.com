@@ -2,27 +2,27 @@
 layout: post
 title: 'Brainfuck Compile Time Evaluator'
 series: stupid_template_tricks
-date: '2014-10-13 04:29:44'
+date: '2014-10-13'
 ---
 Every 2nd grader knows that the [C++ template system is Turing complete](http://stackoverflow.com/a/275295/306149). So what? Compile time Brainfuck evaluator that's what!
 
 {% include image.html file="LarsonLaBrea.jpeg" %}
 
-It turns out that I'm [not the first person](https://github.com/knome/metabrainfuck/blob/master/bf.cpp) who learned me some  metaprogramming and thought it would be a good laugh to implement Brainfuck with C++ templates. But in going though this admitidly pointless exercise, what struck me is how similar a Brainfuck C++ template evaluator is to [one implemented in a functional-style](https://github.com/mattbierner/neith-brainfuck/blob/master/lib/bf.kep).
+It turns out that I'm [not the first person](https://github.com/knome/metabrainfuck/blob/master/bf.cpp) who learned me some  metaprogramming and thought it would be a good laugh to implement Brainfuck with C++ templates. But in going through this admittedly pointless exercise, what struck me is how similar a Brainfuck C++ template evaluator is to [one implemented in a functional-style](https://github.com/mattbierner/neith-brainfuck/blob/master/lib/bf.kep).
 
 In just around 200 LOC, you can create a fairly reasonable and clear Brainfuck implementation using C++ templates. And, while implementing Brainfuck is certainly not very practical, metaprogramming in the same vein actually [does have some interesting applications](http://www.boost.org/doc/libs/1_56_0/doc/html/xpressive.html).
 
-## Overview
+# Overview
 This post covers expressing a Brainfuck evaluator from the ground up. The complete source code can be [found here](https://gist.github.com/mattbierner/090a80d25259b6472827).
 
 I'll start by defining a few helper types and operations that will make the rest of the implementation more clear. Comprehensibility and generality are favored over brevity and cleverness. 
 
 Let's get started.
 
-## I/O Buffers
+# I/O Buffers
 Before expressing language semantics, we need to encode a compile time character buffer. These buffers will be used as both the actual Brainfuck I/O buffers, and also to hold program source code.  
 
-Our buffer type will encode specific characters sequence as unique types. The C++14 addition `std::integer_sequence` does exactly this, encoding a variadic parameter list of values as a type.
+Our buffer type will encode specific character sequences as unique types. The C++14 addition `std::integer_sequence` does exactly this, encoding a variadic parameter list of values as a type.
 
 ``` cpp
 using iochar = char;
@@ -36,7 +36,7 @@ using one_char = char_string<'x'>;
 using abc = char_string<'a', 'b', 'c'>;
 ```
 
-`std::integer_sequence` is pretty bare-bones list. It's useful for unpacks, but inconvenient for our purposes. So let's write some lisp style style `car` and `cdr` operations for `std::integer_sequence`. 
+`std::integer_sequence` is a pretty bare-bones list. It's useful for unpacks, but inconvenient for our purposes. So let's write some lisp style `car` and `cdr` operations for `std::integer_sequence`. 
 
 ``` cpp
 template <typename>
@@ -70,7 +70,7 @@ seq_car<typename seq_cdr<abc>::type>::value; // 'b'
 seq_car<typename seq_cdr<typename seq_cdr<abc>::type>::type>::value; // 'c'
 ```
 
-`std::integer_sequence` is fundamentally an immuable list of values, so we also need a way to transform a `std::integer_sequence`. Lisp uses the `cons` operations for this, which prepends an element onto the head of a list.
+`std::integer_sequence` is fundamentally an immutable list of values, so we also need a way to transform a `std::integer_sequence`. Lisp uses the `cons` operation for this, which prepends an element onto the head of a list.
 
 ``` cpp
 /// Note the reverse argument order vs. `cons` in lisp.
@@ -108,10 +108,10 @@ seq_append<xy>::value; // 'x'
 seq_append<typename seq_cdr<xy>::type>::value; // 'y'
 ```
 
-## Memory Cells
+# Memory Cells
 Brainfuck models program memory as an infinite list of cells. Each cell stores a fixed bit number and is initialized to 0. There is [no standard cell size](http://en.wikipedia.org/wiki/Brainfuck#Cell_size), but one byte is the most common.
 
-The `Cell` type encodes a Brainfuck memory cell storing an eight bit number as a type. A few helpers on the `Cell` type allow transforming's cells.
+The `Cell` type encodes a Brainfuck memory cell storing an eight bit number as a type. A few helpers on the `Cell` type allow transforming cells.
 
 ``` cpp
 using memval = unsigned char;
@@ -154,7 +154,7 @@ template <typename L>
 using list_cdr = typename L::rest;
 ```
 
-## Memory
+# Memory
 We also need a way to encode a position in a `List` of cells. Since `List` is an immutable list of values, a [zipper](http://en.wikipedia.org/wiki/Zipper_(data_structure)) turns out to be a good abstraction for this.
 
 
@@ -186,7 +186,7 @@ This also has the advantage of allowing us to encode bi-directionally infinite m
 using Memory = Zipper<List<Cell<>>, Cell<>, List<Cell<>>>;
 ```
 
-## State
+# State
 The complete state of our Brainfuck interpreter is captured in a 3-tuple of memory, input buffer, and output buffer.
 
 ``` cpp
@@ -212,10 +212,10 @@ template <iochar... input>
 using initial_state = State<Memory, char_string<input...>, char_string<>>;
 ```
 
-## Basic Semantics
+# Basic Semantics
 With our data structures and operations defined, we can now express the semantics of Brainfuck.
 
-The `Semantics` type maps program source code to a `eval` templated type that encodes the semantics of the input program. The `eval` template type takes a `state` and outputs a new `state`.
+The `Semantics` type maps program source code to an `eval` templated type that encodes the semantics of the input program. The `eval` template type takes a `state` and outputs a new `state`.
 
 `Semantics<>` is the specialization for empty program input, with `eval` acting as the identity function.
 
@@ -282,7 +282,7 @@ struct Semantics<'<', rest...> {
 };
 ```
 
-## I/O Semantics
+# I/O Semantics
 Input and output is also easily expressed using the previously defined operations.
 
 The output operation `.` reads the value held in memory at the current location, and appends this value to the output buffer.
@@ -315,7 +315,7 @@ struct Semantics<',', rest...> {
 };
 ```
 
-## Loop Semantics
+# Loop Semantics
 Looping is the only somewhat complicated part of the evaluator, as it involves matching symbols in the program source.
 
 When the `[` symbol is encountered, we check if the value stored at the current memory cell is zero. If it is, then we skip to the next instruction after the matching `]` in the source code. Otherwise, we enter the body of the loop, and when the matching `]` is encountered, jump back to execute the original `[` operation again.
@@ -389,7 +389,7 @@ struct Semantics<'[', rest...> {
 };
 ```
 
-## Finishing Touches
+# Finishing Touches
 Brainfuck treats any character besides `+-<>.,[]` as a comment. One final partial specialization of `Semantics` makes all other character noops.
 
 ``` cpp
@@ -408,7 +408,7 @@ using evaluate = typename prog::template eval<initial_state<input...>>::out;
 ```
 
 
-## Hello World!
+# Hello World!
 Here is 'Hello World!' in Brainfuck.
 
 ``` cpp

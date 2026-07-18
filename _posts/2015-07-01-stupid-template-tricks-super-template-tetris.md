@@ -2,13 +2,13 @@
 layout: post
 title: 'Super Template Tetris'
 series: stupid_template_tricks
-date: '2015-07-01 14:28:35'
+date: '2015-07-01'
 ---
 Let me share with you a vision of the future which offers hope. It is that we embark on a program to counter the awesome Runtime threat with measures that are preemptive. Let us turn to the very strengths in templating that spawned our great metaprogramming base and have given us the beautiful C++ we enjoy today.
 
 Today, I want to share an important first step with you: *Super Template Tetris*.
 
-## A Rendezvous with Destiny
+# A Rendezvous with Destiny
 Yes. Tetris. In C++. At compiletime.
 
 {% include image.html file="Screen-Shot-2015-06-28-at-10-45-30-PM.png" %}
@@ -26,12 +26,12 @@ Check out the complete, documented [source code on Github][source].
 Let's get started.
 
 
-## Templico, Illinois - Beginnings
+# Templico, Illinois - Beginnings
 *Super Template Tetris* isn't our first go at template based gaming. We previously implemented the arcade game *Snake* or *Nibbler* [as a C++ template metaprogram][nibbler].
 
 {% include image.html file="Screen-Shot-2015-06-28-at-11-03-36-PM.png" %}
 
-That project is a good starting point. Many of data structures, such as lists and grids, will be reused, and we will use the same basic logic for serialization and the game loop.
+That project is a good starting point. Many of the data structures, such as lists and grids, will be reused, and we will use the same basic logic for serialization and the game loop.
 
 But let's step it up. This is ***Super** Template Tetris* after all. Besides just getting a compiletime Tetris clone up and running, secondary goals are:
 
@@ -40,12 +40,12 @@ But let's step it up. This is ***Super** Template Tetris* after all. Besides jus
 * Concentrate all Runtime Bullshit in the `main.cpp` file and limit it to around ten lines of code with almost zero logic.
 * And kill Hitler.
 
-### Interactivity
+## Interactivity
 {% include image.html file="Screen-Shot-2015-06-28-at-10-55-10-PM.png" description="To play Tetris, we're going to have to animate it frame-by-frame and basically make a flip book. Master Shake would not be pleased." %}
 
 There are two approaches to compiletime gaming.
 
-The non-interactive approach takes a list of player input and plays the entire game in a single compile, from initial state until the player looses or no more input is available. This is how Part One of [Template Nibbler][nibbler] worked.
+The non-interactive approach takes a list of player input and plays the entire game in a single compile, from initial state until the player loses or no more input is available. This is how Part One of [Template Nibbler][nibbler] worked.
 
 While players do not have direct control of the game, a form of realtime play is possible by appending input to the input list and recompiling. However, because the compiler always starts from the initial game state, compile time grows linearly with the number of player inputs. Not the best endgame.
 
@@ -55,7 +55,7 @@ The challenge with the interactive approach is that the game state must be saved
 
 *Super Template Tetris* targets the interactive approach.
 
-### Game Loop
+## Game Loop
 Each compile goes through one iteration of the game loop. At a high level, the game loop is identical to the one we used for [Template Nibbler][nibbler].
 
 To review:
@@ -70,7 +70,7 @@ To review:
 
 Before diving into any Tetris game logic, let's take a look at a few compiletime data structures.
 
-## Peace Through String
+# Peace Through String
 We cheated a bit in [Template Nibbler][nibbler]. Sad, but true.
 
 Nibbler defined the `Printer` interface to display the game state and the `Serialize` interface to save the game state to a file. Every type in Nibbler specialized these two interfaces, defining a static `Print` method that performed the given operation.
@@ -87,7 +87,7 @@ struct Printer<std::integral_constant<T, x>> {
 };
 ```
 
-Seems innocent enough for simple types, such `std::integral_constant`, right? But other specializations did a bit more. Don't worry about any of the actual logic here, just notice all the computations that could happen at runtime when `Print` is called.
+Seems innocent enough for simple types, such as `std::integral_constant`, right? But other specializations did a bit more. Don't worry about any of the actual logic here, just notice all the computations that could happen at runtime when `Print` is called.
 
 ```cpp
 template <PlayerState playerState, typename position, Direction direction, typename world, typename random>
@@ -112,7 +112,7 @@ Instead of defining a runtime print function for each type, we'll define a compi
 
 But what is a compiletime string?
 
-### String
+## String
 Jane Austen discussed the theory and implementation of compiletime strings in her seminal work, [Pride and Parser Combinators][pride]. We'll build on her work in *Super Template Tetris*. 
 
 {% include image.html file="jane-austen_in_blue_dress_e5no.jpg" description="Jane Austen, template metaprogramming before it was cool." %}
@@ -141,7 +141,7 @@ std::are_same<
     decltype("abc"_string)>::value;
 ```
 
-### ToString and print
+## ToString and print
 One role of `String` is to store the game's visual representation before it is written to the console.
 
 The `ToString` interface converts a type to a `String` and must be specified for any type that can be rendered.
@@ -168,7 +168,7 @@ std::ostream& print(std::ostream& output, String<elements...>) {
 }
 ```
 
-### String Operations
+## String Operations
 But, while on the subject of strings, let's cover a few other string operations. 
 
 `string_add` combines two strings by smashing their character lists together at relativistic speeds.
@@ -252,7 +252,7 @@ std::is_same<
     string_take<5, decltype("Randy, where's the rest of me!"_string)>>::value;
 ```
 
-### Int To String
+## Int To String
 One final common operation is converting an integer value to a string representation of that value. `int_to_string` takes any integer value (positive or negative) and recursively builds up a string.
 
 ``` cpp
@@ -291,12 +291,12 @@ static_assert(
         int_to_string<-1330>>::value, "");
 ```
 
-## List is on the Air
+# List is on the Air
 The Tetris playfield is really not all that different than the world of [Template Nibbler][nibbler]. Both are grids, Tetris just arranges and moves pieces around its grid slightly differently. So we'll start with the same basic grid implementation as Nibbler, the grid as a list of lists.
 
 {% include image.html file="Barry-Goldwater-Pin-Heart-Right.jpg" description="The Conscience of a Conser - The Barry Goldwater Story" %}
 
-The actual compiletime list structure is almost completely unchanged from Nibbler, so it won't be covered here in any detail (checkout the [source][] if you are interested). Remember, we can get by with a finite list implementation for games like Nibbler and Tetris, instead of the lazy, potentially infinite list that we used to implement [Conway's Game of Life][life]. 
+The actual compiletime list structure is almost completely unchanged from Nibbler, so it won't be covered here in any detail (check out the [source][] if you are interested). Remember, we can get by with a finite list implementation for games like Nibbler and Tetris, instead of the lazy, potentially infinite list that we used to implement [Conway's Game of Life][life]. 
 
 Many of our data structures support the same kinds of generic operations. We've already seen one example of this, `ToString`. Any type that specializes `ToString` can be rendered to a `String`.
 
@@ -309,7 +309,7 @@ struct ToString<List<elements...>> {
 
 `List` also provides a good introduction to two other helpful interfaces: `Functor` and `Foldable`.
 
-### Functor
+## Functor
 [Functor](https://hackage.haskell.org/package/base-4.7.0.2/docs/Data-Functor.html) maps a metafunction function `f` over a type `x`. A metafunction is just a type with a template `apply` member, which can be invoked using the `call` helper.
 
 ```cpp
@@ -348,7 +348,7 @@ std::is_same<
     fmap<Doop, List<bool, int, List<>>>>::value;
 ```
 
-### Foldable
+## Foldable
 [Foldable](http://hackage.haskell.org/package/base-4.8.0.0/docs/Data-Foldable.html) maps and accumulates over a type with a metafunction. Unlike `Functor`,
 `Foldable` produces a result value instead of applying the function inside of the structure.
 
@@ -378,7 +378,7 @@ struct Foldable<f, z, List<x, xs...>> {
 };
 ```
 
-## Grid-nada
+# Grid-nada
 Grids store the *Super Template Tetris* playfield and the game screen. Abstracting the screen to a grid of pixels allows us to develop a simple, compiletime graphics library to render more complex scenes.
 
 The grid structure is almost identical to the one we used in [Template Nibbler][nibbler]. A grid is just a list of lists, with each inner list storing a row of values. 
@@ -404,7 +404,7 @@ struct Grid {
 
 `Grid` assumes that all rows have the same width, so it takes the size of the first row as the width of the entire grid. But, in cases where the grid is empty, `get<0, rows>` does not compile. That's why we have to [short circuit][short-circuit] the evaluation of width.
 
-### Creating Grids
+## Creating Grids
 The `Grid` constructor is not often directly used. We'll mostly create empty grids and transform them.
 
 `gen_grid` builds a `width` by `height` grid of `value`.
@@ -449,7 +449,7 @@ template <Orientation orientation, size_t size, typename value>
 using create_line_grid = create_list_grid<orientation, gen<size, value>>;
 ```
 
-### Grid Lookups / Editing
+## Grid Lookups / Editing
 Grid cells are addressed by `Position`.
 
 ```cpp
@@ -520,7 +520,7 @@ using grid_zip_positions =
         g>>;
 ```
 
-### Combining Grids
+## Combining Grids
 `grid_get` and `grid_put` do not compile if the requested position is outside of the grid. For many cases though, such as when drawing to the screen grid, it makes sense to just ignore positions outside of the screen.
 
 `grid_is_in_bounds` checks if a position is within the bounds of a grid. 
@@ -599,20 +599,20 @@ using grid_place_grid = car<fold<
 These update operations are the basis for both drawing to the screen and updating the playfield in *Super Template Tetris*.
 
 
-## Buffer
+# Buffer
 Some gamers scoffed at good o' Template Nibbler's black and white, console graphics. They should be happy that there were any graphics at all. Real template gamers play by compiler error alone. But I guess we can throw them a bone. 
 
 {% include image.html file="Screen-Shot-2015-06-28-at-6-04-53-PM.png" description="I ain't seen nothing like him in any amusement hall..." %}
 
 That's why *Super Template Tetris* features an astonishing new graphics system capable of unprecedented levels of detail and nearly photorealistic rendering*.
 
-Template Nibbler's rendering system was simple, it just printed out the game board grid as a string and then consed on some UI. That's not going to fly this time. Its just not scalable. With *Super Template Tetris*, we want to decouple the graphics from the game state more, and also support drawing UI and other elements more easily.
+Template Nibbler's rendering system was simple, it just printed out the game board grid as a string and then consed on some UI. That's not going to fly this time. It's just not scalable. With *Super Template Tetris*, we want to decouple the graphics from the game state more, and also support drawing UI and other elements more easily.
 
 At the heart of this new rendering system is `Buffer`. `Buffer` is a grid of "pixels" that can be easily printed to the console. So, let's take a look at the `Buffer` and then implement a very simple graphics library.
 
 *\* When compared to other template based gaming systems.*
 
-### Pixel
+## Pixel
 First off, color. That's right, *Super Template Tetris* supports color rendering.
 
 While the human eye only has receptors for three colors, and your dog makes do with a measly two colors, *Super Template Tetris* supports an astonishing [eight drawing colors][ansi-colors]!
@@ -730,7 +730,7 @@ print(std::cout,
 
 {% include image.html file="Screen-Shot-2015-06-24-at-9-14-23-PM.png" %}
 
-### Basic Buffer
+## Basic Buffer
 A buffer is just a grid of pixels. Each frame starts with an `empty_buffer`
 
 ```cpp
@@ -782,7 +782,7 @@ print(std::cout,
 
 {% include image.html file="Screen-Shot-2015-06-24-at-9-29-42-PM.png" %}
 
-### Basic Drawing 
+## Basic Drawing 
 `buffer_draw_grid` is enough to start putting together a simple, console graphics library.
 
 `buffer_draw_line` draws a straight line of `px` repeated `len` times.
@@ -854,7 +854,7 @@ print(std::cout,
 
 And because of the bounds checking in `grid_place_grid`, drawing that extends outside of the buffer is automatically clipped.
 
-### Text
+## Text
 One advantage of rendering to a console is that strings are really easy to print. `buffer_draw_text` renders a `String` into a buffer.
 
 ```cpp
@@ -926,14 +926,14 @@ print(std::cout,
 {% include image.html file="Screen-Shot-2015-06-24-at-9-41-10-PM.png" %}
 
 
-## Tetrominos and the Playfield
+# Tetrominos and the Playfield
 {% include image.html file="sdi.png" description="That's right Space, you best check yourself lest you wreck yourself." %}
 
 Damn. More than halfway in and not one line of code concerning Tetris's game logic. It's not like we haven't made progress though. We've built up a set of compiletime data structures, created a simple graphics library, and seen how to render graphics using `print`.
 
 Time to do something with all that work.
 
-### Tetrominos
+## Tetrominos
 Each Tetris piece, or tetromino, is an arrangement of four connected blocks. Standard Tetris features seven kinds of tetrominos, each commonly named after the letter of the alphabet that best fits its shape: I, J, L, O, S, T, and Z.
 
 *Super Template Tetris* stores tetrominos in a buffer.
@@ -998,10 +998,10 @@ print(std::cout,
 
 {% include image.html file="Screen-Shot-2015-06-25-at-9-26-48-PM.png" %}
 
-### Random Bag
+## Random Bag
 Tetrominos are randomly selected during gameplay. But how do we generate random numbers at compiletime?
 
-Template Nibbler randomly placed food pieces in its game world using a linear feedback shift reduce register based compiletime random number generator. But encoding binary as `std::integer_sequences<bool, ...>` may have been slight case of template overkill.
+Template Nibbler randomly placed food pieces in its game world using a linear feedback shift reduce register based compiletime random number generator. But encoding binary as `std::integer_sequences<bool, ...>` may have been a slight case of template overkill.
 
 A linear congruent generator accomplishes much the same in six lines of rather boring code.
 
@@ -1037,7 +1037,7 @@ struct BlockGenerator {
 using initialBlockGenerator = BlockGenerator<Random<blocks::size>>;
 ```
 
-### Playfield
+## Playfield
 The Tetris playfield is also just a buffer, a grid of pixels ten wide and twenty high. Placing a block that extends off the top of the playfield ends the game. Let's call that area at the top of the playfield the dangerzone.
 
 For practical purposes, we'll store dangerzone in the top four rows of the playfield.
@@ -1086,7 +1086,7 @@ using playfield_get_positions =
         grid_zip_positions<grid>>;
 ```
 
-### Collision Checking
+## Collision Checking
 The primary role of the playfield is to store blocks and check for collisions with the active `Tetromino`. Again, we can reuse many of the base grid operations to implement collision checking.
 
 One useful application of `Foldable` is to test all elements of a structure with a predicate. The template variable `any` applies a metapredicate to any `Foldable` `s`, returning true if the metapredicate was satisfied for any value in `s`.
@@ -1152,10 +1152,10 @@ using playfield_remove_row =
 ```
 
 
-## Game Logic
+# Game Logic
 Time to Tetris. About time.
 
-### State 
+## State 
 The entire state of *Super Template Tetris* is stored in seven variables:
 
 * Player state - Is the player alive or dead?
@@ -1226,10 +1226,10 @@ using initialState =
             initialBlockGenerator>>;
 ```
 
-### Transition Function
+## Transition Function
 *Super Template Tetris* is rendered one frame at a time, at about 5 SPF. The `step` transition function takes player input and the current state, and produces the next state.
 
-The simplist case is when the player has lost the game.
+The simplest case is when the player has lost the game.
 
 ```cpp
 template <Input input, typename state>
@@ -1269,7 +1269,7 @@ struct step {
 
 Let's look at movement first.
 
-### Movement
+## Movement
 The player can input one of eight commands to control the active tetromino.
 
 ```cpp
@@ -1395,7 +1395,7 @@ struct move_block<Input::Hard, state> {
 };
 ```
 
-### Gravity
+## Gravity
 Back in the `step` function.
 
 After player input is processed, `apply_gravity` moves the active block down by one. 
@@ -1415,7 +1415,7 @@ struct step {
 };
 ```
 
-If a collision occurs after gravity is applied, we may place the current piece.  `TryPlaceCollisionPiece` uses the old, non-colliding state to places the active piece if the current delay is over its limit (one frame).
+If a collision occurs after gravity is applied, we may place the current piece.  `TryPlaceCollisionPiece` uses the old, non-colliding state to place the active piece if the current delay is over its limit (one frame).
 
 ```cpp
 template <typename s>
@@ -1434,7 +1434,7 @@ struct TryPlaceCollisionPiece :
         s> { };
 ```
 
-### Scoring
+## Scoring
 Gravity and movement done. On to collapsing full rows.
 
 `update_full_rows` computes the number of full rows, removes them, and updates the score based on the number removed.
@@ -1499,7 +1499,7 @@ And that's Tetris for you. Not too complex actually.
 Just two components left: rendering and saving.
 
 
-## That Printer of Tetrominos
+# That Printer of Tetrominos
 `State` specializes `ToString`, creating a screen that is slightly larger than the playfield's size. 
 
 ```cpp
@@ -1604,7 +1604,7 @@ using current_block_buffer = buffer_draw_grid<
 {% include image.html file="Screen-Shot-2015-06-26-at-12-29-48-AM.png" %}
 
 
-## Serialization 
+# Serialization 
 {% include image.html file="reagan_bonzo-1.gif" description="It's breakfast again in America" %}
 
 That's enough to actually play *Super Template Tetris*, just not in the interactive mode we are targeting.
@@ -1632,9 +1632,9 @@ using game = play<initialState,
     Input::LRot, Input::Right, Input::Right, Input::Hard>;
 ```
 
-As we discussed, there are a few big problems with this approach. The most significant is that it starts with the initial state on every compiler run. As the list of inputs grows, so does the compiletime. Good luck trying to clear more than single row, a action that itself requires at least fifteen inputs or so. Non-interactive play also lacks the fast paced, twitch based gameplay experiance that modern template gamers demand. 
+As we discussed, there are a few big problems with this approach. The most significant is that it starts with the initial state on every compiler run. As the list of inputs grows, so does the compiletime. Good luck trying to clear more than a single row, an action that itself requires at least fifteen inputs or so. Non-interactive play also lacks the fast paced, twitch based gameplay experience that modern template gamers demand. 
 
-### Serialize
+## Serialize
 The solution introduced by [Template Nibbler][nibbler] is to save the game state between each compile run. Serializing to C++ template source code sounds crazy, but it gets us a lot for free, compiletime deserialization using `#include` for one.
 
 The entire game state must be saved between compile runs. The serialization logic is implemented using the `Serialize` interface, and any type that is part of the game state must implement `Serialize`. 
@@ -1655,7 +1655,7 @@ template <> struct Serialize<int> { using type = decltype("int"_string); };
  };
 ```
 
-### Class Serialization
+## Class Serialization
 Now let's consider serializing a data structure like `List`. 
 
 `List` takes its elements as template parameters: `List<int, bool, int>`. In fact, all template classes share the same basic serialization: `CLASS_NAME<PARAM1, PARAM2, ..., PARAMN>`. `serialize_class` removes the need for too much boilerplate code.
@@ -1679,7 +1679,7 @@ struct Serialize<List<elements...>> {
 };
 ```
 
-### Serializing Values
+## Serializing Values
 One small complication of using `serialize_class` is value template parameters. Consider `Gfx`: 
 
 ```cpp
@@ -1722,7 +1722,7 @@ struct Serialize<Gfx<fg, bg>> {
 };
 ```
 
-### Serializing Strongly Typed Enumerations
+## Serializing Strongly Typed Enumerations
 But wait! `Color` is a strongly typed enumeration! So, even after wrapping it in `SerializableValue`, how should we actually serialize it to C++ source code?
 
 The obvious approach is to serialize `Color` values to their full symbol names.
@@ -1788,8 +1788,8 @@ struct Serialize<SerializableValue<Color, x>> {
 
 The remaining implementations of `Serialize` are just boilerplate at this point. Check out the [source][] if you're interested.
 
-### Writing and Reading 
-After implementing `Serialize` for every compoent of the game state, we can serialize the entire game state to a string:
+## Writing and Reading 
+After implementing `Serialize` for every component of the game state, we can serialize the entire game state to a string:
 
 ```cpp
 serialize<initialState>;
@@ -1803,7 +1803,7 @@ String<'S', 't', 'a', 't', 'e', '<', 's', 't', 'a', 't', 'i', 'c', '_', 'c', 'a'
 
 Such beauty; a C++ template of C++ template source code. Truly like looking into the face of God.
 
-But sometimes, at the height of our revelries, when our templating is at it's zenith, and all is most right with the world, the most unthinkable disasters descend upon us. We must save the state to a file. Runtime beckons. And Runtime, like Satan, will not descend to [evaluation] hell till he has dragged a living part of [compiletime] heaven down with him, and helmeted himself with it.
+But sometimes, at the height of our revelries, when our templating is at its zenith, and all is most right with the world, the most unthinkable disasters descend upon us. We must save the state to a file. Runtime beckons. And Runtime, like Satan, will not descend to [evaluation] hell till he has dragged a living part of [compiletime] heaven down with him, and helmeted himself with it.
 
 `serialize_game` is the only other runtime operation besides `print` used in *Super Template Tetris*. It saves the game state to a file called `current_game.h`.
 
@@ -1826,10 +1826,10 @@ And because we serialized to C++, all we have to do is write `#include "current_
 using game = step_t<INPUT::LROT, state>;
 ```
 
-## The Shining City
+# The Shining City
 Almost done now. Just a few finishing touches.
 
-### Reading Player Input
+## Reading Player Input
 Player input is supplied through compiler flags, one flag for each of the valid commands.  
 
 ```cpp
@@ -1857,7 +1857,7 @@ If no input is supplied, the game advances by one frame.
 
 {% include image.html file="Screen-Shot-2015-06-29-at-8-26-24-PM.png" description="Live free or -D HARD" %}
 
-### Main
+## Main
 `main` brings the runtime components together. It loads the current game state with `#include`, reads the player input, computes the next frame, prints the world to the console, and then saves the game state.
 
 ```cpp
@@ -1873,7 +1873,7 @@ int main(int argc, const char* argv[]) {
 }
 ```
 
-### Gameplay
+## Gameplay
 You play *Super Template Tetris* by recompiling its source code, then executing the runtime program to render the game and update its saved state. We're using a few C++17 features, such as fold expressions, along with a proposed C++17 extension for creating `String` from string literals, so a few additional flags must be passed to the compiler.  
  
 ```
@@ -1894,7 +1894,7 @@ Games can get pretty complex.
 
 {% include image.html file="4.png" %}
 
-## Farewell
+# Farewell
 Well, that's it! Check out the documented [source][] for more details on the implementation or to play a game or two. 
 
 It's been quite a journey, and we held together through some stormy syntax, but in the end we reached our destination. Tetris as a template metaprogram. So now it's up to you. Go forth and metaprogram.

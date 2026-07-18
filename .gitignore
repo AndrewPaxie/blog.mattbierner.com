@@ -19,9 +19,9 @@ Thumbs.db
 *.log
 
 support
+*.dict
 
 # Jekyll #
 ##########
 _site/
-.sass-cache
 .jekyll-metadata

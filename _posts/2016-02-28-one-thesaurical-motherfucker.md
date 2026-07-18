@@ -4,6 +4,8 @@ title: "One Thesaurical Motherfucker"
 date: '2016-02-28'
 description: "Thesaurus all things!"
 series: newspeak
+titleImage:
+    file: "logo.png"
 ---
 
 {% include image.html file="logo.png" %}
@@ -22,7 +24,7 @@ You see, recently I decided to write a modern adaptation of *Moby-Dick*, and the
 
 Clearly something is a little bit off. But I think I know the problem. 
 
-Now, while I love me some Melville, god damn is he one thesaurical motherfucker, with word choices that border on Melville parody at times. If only I could could use big, highfalutin words like him, surely my writing would be much better! So I built a tool to help me do just that.
+Now, while I love me some Melville, god damn is he one thesaurical motherfucker, with word choices that border on Melville parody at times. If only I could use big, highfalutin words like him, surely my writing would be much better! So I built a tool to help me do just that.
 
 {% include image.html file="example.png" %}
 
@@ -46,7 +48,7 @@ You'll note some rather interesting substitutions. Appropriately enough, I'm usi
  
 Not a bug if you ask me.
 
-## Other Options
+# Other Options
 The above example uses the longest possible synonym from Moby, many of which are actually phrases. If we instead choose the longest possible word, we get the following:
 
 > Cock-a-doodle-doo me Undesirable. Some years ago—never shilly-shallying how long-continuing precisely—having inconsequentially or no prosperousness in my porte-monnaie, and good-for-nothing classificational to self-interestedness me on multilaterality, I accommodatingness I would circumnavigate about a inconsequentially and archbishopric the milk-and-water characterization of the superabundance.
@@ -63,7 +65,7 @@ Or you can choose to use the shortest word:
 
 > Ask me Ishmael. Some yrs ago—never ba how age precisely—having no or no fat in my bag, and dud hap to no me on hem, I bit I would fly about a no and do the wet by of the all
 
-## Beyond Melville
+# Beyond Melville
 The site includes a small set of excerpts from a variety of books to play around with – from *Moby-Dick* to *The Cat in the Hat* (which henceforth shall be known as *The computerized axial tomography in the balaclava helmet*) – or you can enter your own text.
 
 As you may guess from this site's title, Kurt Vonnegut is another one of my favorite authors, even though his writing style is pretty much the opposite of Melville's. But the tool produces great output for his work too.
@@ -97,7 +99,7 @@ The *Breakfast of Champions* excerpt also includes part of *The Star-Spangled Ba
 > What so proudly we hailed at the visible radiation’s not accept compromise bright and sunny,
 
 
-## Source and Api
+# Source and Api
 [Check out the website][site] if you just want to try improving some text. 
 
 The source code for both the backend and the website is [on Github][src].

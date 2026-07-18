@@ -35,3 +35,18 @@ gif:
         –<br>
         <i>A Treatise on Gifs</i>, Soft Cell
 
+modded_reality:
+    name: "Modded Reality"
+    description: ""
+
+in_profile:
+    name: "In Profile"
+    description: ""
+
+letterpress:
+    name: "Letterpress"
+    description: ""
+
+arr:
+    name: "Arr!"
+    description: "Dreams of cheese in augmented reality"

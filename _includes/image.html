@@ -4,9 +4,9 @@
 
 <figure class="image">
     <a href="{{ image_href }}">
-        <img src="{{ image_src }}" alt="{{ include.description }}" />
+        <img src="{{ image_src }}" alt="{{ include.description }}" {% if include.style %}style="{{ include.style }}"{% endif %} />
     </a>
 {% if include.description %}
-    <figcaption>{{ include.description | Markdownify }}</figcaption>
+    <figcaption>{{ include.description | markdownify }}</figcaption>
 {% endif %}
-</figure>
+</figure> 

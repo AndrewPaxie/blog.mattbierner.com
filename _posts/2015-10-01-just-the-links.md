@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Just the Links
-date: '2015-10-01 05:43:26'
-description: 'A Chrome plugin that shows only the important part of a Wikipedia entry: the hyperlinks.'
+date: '2015-10-01'
+description: "A Chrome plugin that shows only the important part of a Wikipedia entry: the hyperlinks"
 series: newspeak
 ---
 The allure of an unvisited Wikipedia hyperlink is difficult to resist. It's gotten to the point where I don't even read the articles anymore, I just kind of scan for interesting looking hyperlinks to click on. From there, it was but a short jump to *[Just the Links][jtl]*.
@@ -21,5 +21,5 @@ The [*Just the Links* site][jtl] has many more details, or you can [download *Ju
 
 
 [jtl]: http://mattbierner.github.io/just-the-links/
-[download]: hhttps://chrome.google.com/webstore/detail/just-the-links/mbfccghgfekfafnjhlkfkfiolbplafpa
+[download]: https://chrome.google.com/webstore/detail/just-the-links/mbfccghgfekfafnjhlkfkfiolbplafpa
 [src]: https://github.com/mattbierner/just-the-links

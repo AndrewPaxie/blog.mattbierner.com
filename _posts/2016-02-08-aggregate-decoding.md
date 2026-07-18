@@ -2,14 +2,14 @@
 layout: post
 title: "Aggregate Decoding"
 date: '2016-02-08'
-description: "Posting random Wikimedia Commons images plus random hashtags to Twitter."
+description: "Posting random Wikimedia Commons images plus random hashtags to Twitter"
 series: bandarlog
 ---
 [@Arthur_Morty][Arthur_Morty] is a Twitter account that posts a random image from [Wikimedia Commons][commons], plus a random sampling of between one and three hashtags every 10 minutes.
 
 {% include image.html file="hero.png" %}
 
-Besides dabeling in postmodernist social commentary, Mr. Morty is quite the infrastructure photography enthusiast, and has been known to indulge in some truly cringeworthy wordplay (characteristic not dissimilar to yours truly).
+Besides dabbling in postmodernist social commentary, Mr. Morty is quite the infrastructure photography enthusiast, and has been known to indulge in some truly cringeworthy wordplay (characteristic not dissimilar to yours truly).
 
 {% include image.html file="beast-mode.png" %}
 

@@ -3,9 +3,11 @@ layout: post
 title: "Hamt + 1"
 date: '2016-01-29'
 description: "Now with 100000% more cephalopod!"
+titleImage:
+    file: "hamt-logo.png"
 ---
 
-{% include image.html file="hamt-logo.png"  %}
+{% include image.html file="hamt-logo.png" %}
 
 [Hamt+][src] may not have the same level of recognition or funding as Immutable.js, but we've got the better logo. Just look at that friendly [Cephalopod of Mutation](/the-lispers-in-the-darkness/), bursting onto the immutable landscape all ready to wreck up the place.
 
@@ -19,7 +21,7 @@ const book = ["The", "Time", "Traveller", "for", "so", "it", "will", "be", "conv
 // Build count of words in `book`
 const map = hamt.mutate(map => {
     // The map can be mutated within this block, but these mutations
-    // cannot leak outsite of the block.
+    // cannot leak outside of the block.
 
     // Note how we don't have to assign the value of `map` to the result
     // because `map` is mutated.
@@ -28,7 +30,7 @@ const map = hamt.mutate(map => {
 }, hamt.empty);
 ``` 
 
-A Hamt+ map can be made mutable at any time, and the mutations are guaranteed not to effect any existing references to the immutable data structure:
+A Hamt+ map can be made mutable at any time, and the mutations are guaranteed not to affect any existing references to the immutable data structure:
 
 ```js
 const h = hamt.set('a', 1, hamt.make());

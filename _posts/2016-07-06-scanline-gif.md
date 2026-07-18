@@ -2,22 +2,24 @@
 layout: post
 title: "scanline.gif"
 date: '2016-07-06'
-description: "Flattening animated gifs to a single image and generating a slit-scan like effect."
+description: "Flattening animated gifs to a single image and generating a slit-scan like effect"
 series: gif
+titleImage:
+    file: "cat.gif"
+links:
+  - title: "Site"
+    url: "https://mattbierner.github.io/scanline-gif/"
+  - title: "Documentation"
+    url: "https://github.com/mattbierner/scanline-gif/blob/gh-pages/documentation/about.md"
+  - title: "Source"
+    url: "https://github.com/mattbierner/scanline-gif"
 ---
 
 {% include image.html file="cat.gif" %}
 
 *[scanline.gif][site]* is an experiment flattening gifs so that multiple frames of animation are shown in a single image. These images themselves can be pretty interesting, but we can also then replay the original animation to generate fun new gifs. The resulting effect is kind of like [slit-scan photography](https://en.wikipedia.org/wiki/Slit-scan_photography).
 
-**Links**
-
-* [Site][site]
-* [Documentation][documentation]
-* [Source][source]
-
-
-## Concept
+# Concept
 The original idea behind *scanline.gif* was to explore rendering every frame of an animated gif in a single (still) image. This is accomplished by breaking the final image into non-overlapping slices and rendering each frame of the animation into different slices. For example, the left side of the final image may show the first frame of the animation, while the middle section may show frame seven. It's easier to show this than explain.
 
 Take a 13 frame gif where each frame is a solid color, starting with red at frame 1 and fading to blue at frame 13.
@@ -36,8 +38,8 @@ These images can be pretty cool but, for even more fun, you can then replay the 
 
 
 
-## Other Settings
-Besides the basic column rendering showing above, *scanline.gif* provides a few different modes for placing the image slices. [The documentation][documentation] explains these in more detail, along with the other rendering settings, but here's a few quick examples ([original gif used for these examples](https://media2.giphy.com/media/jb5WFJTgSSonu/giphy.gif)):
+# Other Settings
+Besides the basic column rendering shown above, *scanline.gif* provides a few different modes for placing the image slices. [The documentation][documentation] explains these in more detail, along with the other rendering settings, but here's a few quick examples ([original gif used for these examples](https://media2.giphy.com/media/jb5WFJTgSSonu/giphy.gif)):
 
 
 {% include image.html file="cat-columns.gif" description="Columns - Equal width columns, one for each frame of the animation" %}
@@ -58,5 +60,4 @@ Besides the basic column rendering showing above, *scanline.gif* provides a few 
 
 
 [site]: https://mattbierner.github.io/scanline-gif/
-[source]: https://github.com/mattbierner/scanline-gif
 [documentation]: https://github.com/mattbierner/scanline-gif/blob/gh-pages/documentation/about.md

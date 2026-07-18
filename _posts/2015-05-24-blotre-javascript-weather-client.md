@@ -2,33 +2,33 @@
 layout: post
 title: Blot're Javascript Weather Client
 series: blotre
-date: '2015-05-24 03:48:00'
+date: '2015-05-24'
 ---
 Hooking shit up to [Blot're][blotre] just got easier thanks to [Blot're.js][blotre-js]. Blot're.js is a thin Javascript / Node wrapper around the [Blot're REST API][blotre] that can help you quickly query, obtain user authorization, and perform update operations against Blot're.
 
 The best way to learn is by doing, so let's use Blot're.js to create a simple weather application for Blot're. This app will display the current temperature in a user's stream. You can find the complete source for this example [here][src].
 
 ###### Update - June 6, 2015
-I've create a Javascript [helper framework](http://github.com/mattbierner/blotre-cl-framework) that greatly simplifies creating command line, disposable client applications.
+I've created a Javascript [helper framework](http://github.com/mattbierner/blotre-cl-framework) that greatly simplifies creating command line, disposable client applications.
 
-## Getting Started
+# Getting Started
 [Blot're.js][blotre-js] is registered as `'blotre'` on npm. 
 
 ```
 $ npm install blotre
 ```
 
-### Empty Client
+## Empty Client
 Blot're.js exports a class that handles all communication with `https://blot.re`. This class also maintains client state, such as credentials and client info.
 
-We create a empty client using `new` or the `.create()` static method.
+We create an empty client using `new` or the `.create()` static method.
 
 ```js
 var Blotre = require('blotre').
 var client = new Blotre();
 ```
 
-### Basic Queries
+## Basic Queries
 Our newly created client has no credentials, or client information that could be exchanged for credentials, but it can read data using the Blot're REST API.
 
 Let's use our empty client to lookup the most recently updated streams. All of the Blot're.js request APIs return [Bluebird promises][bluebird]. 
@@ -85,12 +85,12 @@ client.getStreams({ query: "toast" })
 ```
 
 
-## Authorization
+# Authorization
 But our weather app will need to both read and update streams. And update operations require user authorization. 
 
 Blot're supports two means of authorization: [OAuth2 authorization code flow][blotre-authorization-code] and [disposable/single use clients][blotre-disposable]. Blot're.js provides helper methods for both.
 
-### Authorization Code
+## Authorization Code
 The OAuth2 authorization code flow is the preferred authorization approach, but is not the best first fit for our simple weather app. So, while we'll actually use disposable client authorization, let's quickly take a look at how the authorization code flow works.
 
 Any client application that uses the authorization code flow must be [registered with Blot're][blotre-register]. After completing registration, grab the `client_id`, `client_secret`, and a `redirect_uri` for use with Blot're.js.
@@ -105,7 +105,7 @@ var client = Blotre.create({
 
 The client still has no credentials yet, but now it does have a means of obtaining user authorization.
 
-As the first authorization step, we must direct the user to visit an authrozation confirmation page on `https://blot.re`. `getAuthorizationUrl` returns the url of the page that the user should visit to authorize our client.
+As the first authorization step, we must direct the user to visit an authorization confirmation page on `https://blot.re`. `getAuthorizationUrl` returns the url of the page that the user should visit to authorize our client.
 
 ```js
 client.getAuthorizationUrl();
@@ -130,8 +130,8 @@ client.redeemAuthorizationCode('ZTdmMWMyYjAtYWNmZS00Y2FlLTg2YzAtMDUxZDc5NWYxYmI0
 
 `redeemAuthorizationCode` itself does not update our client's credentials, so be sure to call `setCreds` if the request completes successfully. Now any future requests will automatically attach the acquired credentials.
 
-### Disposable Client
-The authorization code flow has at least one big drawback for our weather app, the redirect_uri to which the authorization code is sent much be publicly reachable by the user agent. That'll require some kind of server and sounds like a lot of work for such as simple app. All we really want to do is talk to Blot're on behalf of a single user. And that's precisely what the [Blot're disposable client authorization flow][blotre-disposable] was designed for.
+## Disposable Client
+The authorization code flow has at least one big drawback for our weather app, the redirect_uri to which the authorization code is sent must be publicly reachable by the user agent. That'll require some kind of server and sounds like a lot of work for such a simple app. All we really want to do is talk to Blot're on behalf of a single user. And that's precisely what the [Blot're disposable client authorization flow][blotre-disposable] was designed for.
 
 A disposable client looks and behaves much like a regular Blot're client, except that it can be authorized by at most one user. `createDisposable` creates a new disposable client. The `name` and `blurb` parameters must be provided and will be shown to the user during the authorization confirmation flow.
 
@@ -186,8 +186,8 @@ var tryRedeem = function(client, callback) {
 
 Any user can redeem the code generated for a disposable client, although the code may only be redeemed once. If the code expires without having been redeemed, we must create a new disposable client and prompt the user again. But if everything worked as expected, our new client should now have credentials be authorized to talk to Blot're on the user's behalf. 
 
-### Persisting and Using Existing Credentials
-Authorized clients hold their credentials in memory and can continue to make authorized requests until they are shut down. For our weather app, we'll need to   persist these credentials so that the user does not need to authorize our app every time it is restrated.
+## Persisting and Using Existing Credentials
+Authorized clients hold their credentials in memory and can continue to make authorized requests until they are shut down. For our weather app, we'll need to   persist these credentials so that the user does not need to authorize our app every time it is restarted.
 
 The `creds` property of a client contains the current credentials:
 
@@ -241,10 +241,10 @@ var readClient = function() {
 ```
 
 
-## Updating a Stream
+# Updating a Stream
 Now that our client app is fully authorized, we're ready to start updating streams.
 
-### Getting a User's Root Stream
+## Getting a User's Root Stream
 When authorization succeeds, Blot're provides basic information about the user who granted authorization.
 
 ```js
@@ -277,7 +277,7 @@ client.getStream(client.creds.user.rootStream)
   owner: '554666c3e4b0fa7f3e694afe' }
 ```
 
-### Authorized API Operations
+## Authorized API Operations
 Blot're.js automatically attaches credentials to any API request that requires authorization. All mutation operations, such as a status or creating a new stream, require user authorization.
 
 As long as user `Matt` authorized our client and we have a valid token, this should succeed:
@@ -295,8 +295,8 @@ client.createStream({
 Additionally, if the access token expires but a refresh token is present, Blot're.js will automatically attempt to exchange the refresh token for a new access token and replay the request. This allows long running scripts to transparently update their credentials without user interaction.
 
 
-### Creating the weather stream
-Let's setup a new substream that our weather app. `updateWeatherStream` create or updates the `'Weather'` stream for the current user.
+## Creating the weather stream
+Let's setup a new substream that our weather app. `updateWeatherStream` creates or updates the `'Weather'` stream for the current user.
 
 ```js
 var updateWeatherStream = function(client, color) {
@@ -318,7 +318,7 @@ If the stream `uri` already exists, `createStream` simply updates the existing s
 We could alternatively use `client.setStreamStatus` if we knew the target stream's id. This has lower overhead and is the preferred approach for production applications.
 
 
-## Bringing it All Together
+# Bringing it All Together
 Now let's bring all these pieces together for our weather app.
 
 Besides `blotre`, we'll need a few other packages for our weather app: `request-promise`, `cron`, and `colour-me-life`
@@ -330,7 +330,7 @@ var cron = require('cron');
 var fs = require('fs');
 ```
 
-### Getting the Current Temperature
+## Getting the Current Temperature
 First off, getting the current temperature. We'll use [OpenWeatherMap][] since they provide free queries by zipcode. 
 
 ```js
@@ -340,7 +340,7 @@ var getWeather = function(zip) {
 };
 ```
 
-We extract the temperature from the returned data. The temperature is in Kelvin so we'll also convert it to Celcius
+We extract the temperature from the returned data. The temperature is in Kelvin so we'll also convert it to Celsius
 
 ```js
 var toC = function(temp) {
@@ -355,12 +355,12 @@ var getCurrentTemp = function(zip) {
 };
 ```
 
-### Temperature to Color
+## Temperature to Color
 Directly basing our stream color on temperature value, such as `30C === 0x00001e` would be boring. The color would make no visual sense and the transitions between temperature would be too small.
 
 We want something more like a thermometer display, red for hot and blue for cold, so let's use a simple mapping function to convert the temperature to a representative color.
 
-`colour-me-life` allows us to define a and sample a spectrum of colors.
+`colour-me-life` allows us to define and sample a spectrum of colors.
 
 ```js
 var weatherSpectrum = new (require('colour-me-life'))();
@@ -368,7 +368,7 @@ weatherSpectrum.setSpectrum('blue', 'green', 'red');
 weatherSpectrum.setNumberRange(0.0, 1.0);
 ```
 
-Our temperature conversation scales temperatures to between 0C (#0000ff) and 37C (#ff0000) degrees celcius for samlpling.
+Our temperature conversion scales temperatures to between 0C (#0000ff) and 37C (#ff0000) degrees celsius for sampling.
 
 ```js
 var tempToColor = function(temp) {
@@ -379,7 +379,7 @@ var tempToColor = function(temp) {
 };
 ```
  
-Let's checkout out the weather of `92328`:
+Let's check out the weather of `92328`:
  
 ```js
 var ZIP = "92328";
@@ -399,7 +399,7 @@ Temp:24.642 Color:#555600
 You may want to adjust the mapping function to get slightly more appealing colors.
 
  
-### Updating the Weather Stream
+## Updating the Weather Stream
 Now let's hook the temperature up to Blot're.
 
 `updateWeather` combines `getCurrentTemp` and `updateWeatherStream` to update the current user's `'Weather'` stream based on the temperature.
@@ -416,7 +416,7 @@ var updateWeather = function(client) {
 };
 ```
 
-### Scheduling and Boot
+## Scheduling and Boot
 The free application temperature data provided by OpenWeatherMap only seems to update every half hour, so hitting it up too often provides little benefit. To be conservative, let's use cron to update the temperature data every ten minutes. 
 
 ```js
@@ -460,8 +460,8 @@ BlotreCl({
 }).then(start);
 ```
 
-## Conclusion
-You should now be able to view your new Weather stream on Blot're. Hopefully this walkthough  deomonstrates how easy it is to integrate simple applications with Blot're.
+# Conclusion
+You should now be able to view your new Weather stream on Blot're. Hopefully this walkthrough demonstrates how easy it is to integrate simple applications with Blot're.
 
 [Checkout the source][src] for this demo and the [documentation for Blot're.js][documentation].
 

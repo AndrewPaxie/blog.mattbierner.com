@@ -2,19 +2,19 @@
 layout: post
 title: 'The Life Comonadic'
 series: stupid_template_tricks
-date: '2014-11-03 01:17:45'
+date: '2014-11-03'
 ---
-A [Brainfuck evaluator][brainfuck] is interesting and all, but far too one-dimensional. Lets's kick things up a dimension, it's time for C++ template compile-time [Conway's Game of Life][life]. 
+A [Brainfuck evaluator][brainfuck] is interesting and all, but far too one-dimensional. Let's kick things up a dimension, it's time for C++ template compile-time [Conway's Game of Life][life]. 
 
 {% include image.html file="larsonevolution.jpg" %}
 
 This post translates a [Haskell comonad based Life implementation][void] into a C++ template meta-program. Much like with the [Brainfuck evaluator][brainfuck], once you get over the syntax, C++ templates turn out to be a fairly competent functional language.
 
-I'll start by defining the data structures and operations that will be used to implement Life. The [lazy, compile-time list previously defined][list] will be used heavily. A row of the world is encoded as [zipper][zipper] of cells, with the world grid is simply a zipper of rows. Comonads for both one dimensional and two dimensional zippers make it easy to define and implement the rules of Life.
+I'll start by defining the data structures and operations that will be used to implement Life. The [lazy, compile-time list previously defined][list] will be used heavily. A row of the world is encoded as a [zipper][zipper] of cells, with the world grid simply a zipper of rows. Comonads for both one dimensional and two dimensional zippers make it easy to define and implement the rules of Life.
 
 Complete source code can be found [here][source].
 
-## One Dimensional Zipper
+# One Dimensional Zipper
 The [zipper][zipper] is a one dimensional structure, a list that also encodes the context of a position in that list. Zippers will be used both as rows of cells, and also to zipper rows to create the vertical dimension of the Life grid. 
 
 In our zipper structure, `x` is the focus, `l` is a [list][list] of elements to the right of the focus, and `r` is a [list][list] of elements to the right of the focus. The first element of both `l` and `r` are the direct neighbors of the focus, which requires `l` to be stored in reverse order. 
@@ -69,7 +69,7 @@ struct Zipper {
 };
 ```
 
-Unbound helper functions that take a zipper are also helpful since they reduce the need using the `template` and `typename` keywords. This makes the similarities between C++ templates and more traditional functional languages clearer.
+Unbound helper functions that take a zipper are also helpful since they reduce the need for using the `template` and `typename` keywords. This makes the similarities between C++ templates and more traditional functional languages clearer.
 
 ``` cpp
 template <typename z>
@@ -122,7 +122,7 @@ struct Functor<Zipper<l, x, r>> {
 };
 ```
 
-This approach is a bit more verbose, but may make interfaces more clear and explicit. It greatly benefits from the use of helper function that calls `fmap` by automatically wrapping the callee in a `Functor`.
+This approach is a bit more verbose, but may make interfaces more clear and explicit. It greatly benefits from the use of a helper function that calls `fmap` by automatically wrapping the callee in a `Functor`.
 
 ``` cpp
 template <template<typename> class f, typename x>
@@ -148,7 +148,7 @@ struct Zipper {
 };
 ```
 
-### Zipper Comonad
+## Zipper Comonad
 The [comonad interface][comonad] requires the implementation of two operations: `extract` and either `extend` or `duplicate`. `extend` and `duplicate` can both be implemented in terms of each other.
 
 For the `comonad` of a `zipper`, the `extract` operation is already defined as `get`. I'll use the `extend` and `duplicate` comonad definition to complete the interface.
@@ -194,10 +194,10 @@ template <template<typename> class f, typename z>
 using extend = fmap<f, duplicate<z>>;
 ```
 
-## Plane Zipper
-The zipper is a one dimensional data structure while we need a two-dimensional grid for life. So, much like how you can use an arrays of arrays in C to create a 2D matrix, we'll use a zipper of zippers to build an infinite grid.
+# Plane Zipper
+The zipper is a one dimensional data structure while we need a two-dimensional grid for life. So, much like how you can use an array of arrays in C to create a 2D matrix, we'll use a zipper of zippers to build an infinite grid.
 
-`PlaneZipper` take a zipper of zippers `z`.
+`PlaneZipper` takes a zipper of zippers `z`.
 
 ``` cpp
 template<typename z>
@@ -248,7 +248,7 @@ struct PlaneZipper {
 };
 ```
 
-`PlaneZipper` also is a [Functor][functor]. Mapping a function `f` over a plane zipper applies `f` to every value in the grid, building a new grid from the results. For each row in zipper `z`, we `fmap` the outer zipper first with a functor `do_fmap`. `do_fmap` is applied to every row in the grid and is basically a manually curring of the `fmap` function, fmapping the row with function `f`.
+`PlaneZipper` also is a [Functor][functor]. Mapping a function `f` over a plane zipper applies `f` to every value in the grid, building a new grid from the results. For each row in zipper `z`, we `fmap` the outer zipper first with a functor `do_fmap`. `do_fmap` is applied to every row in the grid and is basically a manual currying of the `fmap` function, fmapping the row with function `f`.
 
 ``` cpp
 template<typename z>
@@ -273,8 +273,8 @@ struct PlaneZipper {
 };
 ```
 
-### Plane Zipper Comonad
-The `PlaneZipper` comonad already implements `extend` as `get`. `duplicate` is implemented by creating a grid of plane zippers focused at each value. `vertical` create the vertical shift components of this grid, while `horizontal` creates the rows.
+## Plane Zipper Comonad
+The `PlaneZipper` comonad already implements `extend` as `get`. `duplicate` is implemented by creating a grid of plane zippers focused at each value. `vertical` creates the vertical shift components of this grid, while `horizontal` creates the rows.
 
 ``` cpp
 template <typename z>
@@ -299,8 +299,8 @@ template <template<typename> class F, typename z>
 using extendPlane = fmap<F, duplicatePlane<z>>;
 ```
 
-## Life
-After establishing all of our data structures and operations, implementing life turns out to the easiest part of the whole process.
+# Life
+After establishing all of our data structures and operations, implementing life turns out to be the easiest part of the whole process.
 
 {% include image.html file="Evolution_of_the_Stick_Man-1.gif" %}
 
@@ -313,7 +313,7 @@ For every cell in the grid, the transition function does the following:
 * If the cell is alive and it has more than 3 living neighbors, the cell dies.
 * If the cell is dead and it has 3 living neighbors, the cell becomes alive.
 
-### Cell
+## Cell
 Cells are a boolean state of either living or dead. We'll encode cells using the `Cell` type, along with aliases for living and dead cell types.
  
 ``` cpp
@@ -326,7 +326,7 @@ using DeadCell = Cell<false>;
 using LiveCell = Cell<true>;
 ```
 
-### Rules
+## Rules
 The next state of a cell is determined solely by the cell's current state and the state of its direct neighbors. `living_neighbors_count` takes a plane zipper `z` and by examines the state of the focus's eight neighboring cells to determine the total number of living neighboring cells of the focus.
 
 ``` cpp
@@ -374,7 +374,7 @@ struct evolve {
 ```   
 
 
-## Output
+# Output
 Our compile time Life implementation outputs a type that encodes the state of the game world. This type is completely useless on its own, but we can write simple printing functions that transform the type into a set of operations that print it out at runtime.
 
 Printing of the various types uses the `Print` struct interface.
@@ -444,7 +444,7 @@ struct Print<PlaneZipper<z>> {
 ```
 
 
-## Putting It All Together
+# Putting It All Together
 The base state of Life is an infinite plane of dead cells. Each row is a zippered, infinite lazy lists of dead cells. 
 
 ``` cpp
@@ -511,7 +511,7 @@ using glider =
 -----------
 ```
 
-### Running
+## Running
 Each generation of the world is constructed by invoking `evolve` on the current state. For example, the third generation of the glider is computed, `typename evolve<typename evolve<glider>::type>::type`.
 
 An infinite list of generations of the glider structure is expressed, `iterate<evolve, glider>`.

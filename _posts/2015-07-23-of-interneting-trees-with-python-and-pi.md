@@ -2,7 +2,7 @@
 layout: post
 title: Of Interneting Trees with Python and Pi
 series: blotre
-date: '2015-07-23 07:28:36'
+date: '2015-07-23'
 ---
 [Blot're.py][blotre-py] is a thin [Blot're][blotre] client for Python. This library has similar capabilities to [Blot're.js][blotre] and makes it easy to connect all sorts of good stuff to Blot're. Good stuff like your household plants. 
 
@@ -11,11 +11,11 @@ This post provides a quick introduction to Blot're.py by example. We'll hook a p
 {% include image.html file="Chrome_Painter.jpg" description="So shiny, so chrome!" %}
 
 
-## Hardware 
+# Hardware 
 This post is more focused on the software side of things, but let me quickly overview the hardware I used for a simple soil moisture sensor. I'm not a hardware expert by any means, but even I was able to cobble together a working sensor just fine using a few tutorials.  
 
-### Components
-The basic component list comes [from this tutorial][hardware-tut], with a few substations and subtractions.
+## Components
+The basic component list comes [from this tutorial][hardware-tut], with a few substitutions and subtractions.
 
 * Raspberry Pi 2.
 * Pi Cobbler+.
@@ -24,19 +24,19 @@ The basic component list comes [from this tutorial][hardware-tut], with a few su
 * [Octopus Soil Moisture Sensor](http://www.amazon.com/Phantom-YoYo-Octopus-Moisture-Compatible/dp/B00ALUTN1G).
 * Lots o' wire.
 
-### Wiring
+## Wiring
 The Tuts+ moisture sensor tutorial was written for a Raspberry Pi Model B, so to wire up the analog to digital converter, I switched over to [an Adafruit tutorial][ada-tut]. The only important part is the connection from the Pi to the MCP3008, just ignore all the switches and sensors and whatnot.
 
 {% include image.html file="raspberry_pi_pi_volume_knob_bb.png" %}
 
-I wried up the moisture sensor to pin 0 on the MCP3008. The Adafruit tutorial also had some helpful Python code for reading integer values from the MCP3008 that I'll reference, but won't cover in any detail. The [example source][src] includes all that if you're interested.
+I wired up the moisture sensor to pin 0 on the MCP3008. The Adafruit tutorial also had some helpful Python code for reading integer values from the MCP3008 that I'll reference, but won't cover in any detail. The [example source][src] includes all that if you're interested.
 
 {% include image.html file="wire-ratking.png" description="I must admit that my wiring was actually closer to this." %}
 
-## Blot're.py
+# Blot're.py
 Back to the safety of software. 
 
-### Installation
+## Installation
 We'll need to install a few Python libraries before starting.
 
 `rpi.gpio` allows us to read the sensor data.
@@ -51,7 +51,7 @@ And Blot're.py of course, along with [Spectra][], a library for sampling colors.
 $ pip install blotre spectra 
 ```
 
-### Basic Queries 
+## Basic Queries 
 The most basic use of Blot're.py is to query Blot're. This can be performed without authorization of any kind.
 
 ```python
@@ -76,8 +76,8 @@ client.get_streams({ 'query': 'moby' })
 
 If a request fails, it raises a `blotre.RestError`. This object has the status code of the response, along with the `error` and `error_description` fields returned by Blot're.
 
-### Authorization and Authorization Code Flow
-Authorization is required for create, update, and delete operations. If you already have credentials, you can manually provides them when you create a new client instance.
+## Authorization and Authorization Code Flow
+Authorization is required for create, update, and delete operations. If you already have credentials, you can manually provide them when you create a new client instance.
 
 ```python
 client = blotre.Blotre({}, creds = {
@@ -88,7 +88,7 @@ client = blotre.Blotre({}, creds = {
 
 But if your app needs to obtain credentials, you have two options: the OAuth2 authorization code flow or using a [Blot're disposable clients][blotre-disposable]. We'll use a disposable client, but let's take a quick look at the authorization code flow first.
 
-The empty `{}` we've been passing to the `Blotre` constructor is the client metadata. [Register a client app on Blot're][blotre-register] and then use this provided values to create a new instance:
+The empty `{}` we've been passing to the `Blotre` constructor is the client metadata. [Register a client app on Blot're][blotre-register] and then use these provided values to create a new instance:
 
 ```python
 client = blotre.Blotre({
@@ -106,7 +106,7 @@ print client.get_authorization_url()
 >>> https://blot.re/v0/oauth2/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A50000&response_type=code&client_id=55614f0630042c617481d7c3
 ```
 
-Once you obtain the code, call `redeem_authorization_code` to get credentials. Any of the token endpoint requests may raise an `blotre.TokenEndpointError` if the request fails.
+Once you obtain the code, call `redeem_authorization_code` to get credentials. Any of the token endpoint requests may raise a `blotre.TokenEndpointError` if the request fails.
 
 ```python
 try:
@@ -131,7 +131,7 @@ client.create_stream({
 })
 ```
 
-### Disposable Client
+## Disposable Client
 [Disposable client apps][blotre-disposable] are good for prototyping and hacking together simple applications, like our soil moisture sensor. Blot're has two APIs for creating disposable client apps: one that is just a thin wrapper around the Blot're disposable API and one that provides a framework for persisting creds and prompting the user to redeem the onetime code. We'll use the latter.
 
 To create a new disposable app, call `create_disposable_app` and pass in the required client metadata. 
@@ -146,10 +146,10 @@ client = blotre.create_disposable_app({
 
 If no persisted creds are available or the client data has expired, a new disposable app is registered with Blot're. The user is then prompted to redeem the code and press enter once they have completed this. Once they do this, the client exchanges its secret for an access token and becomes authorized. In either case, we always end up with an authorized client app after `create_disposable_app` returns. 
 
-## Plant're
+# Plant're
 Now let's use Blot're.py to connect some plants to the internet. The actual client app is pretty simple.
 
-### Python App
+## Python App
 First we have to set up GPIO:
 
 ```python
@@ -231,8 +231,8 @@ while True:
 
 On the first run, you'll be prompted to redeem the code. After that though, if everything goes right, this script should continue to run forever, with Blot're.py silently exchanging the refresh token for new credentials behind the scenes.
 
-### Starting on Boot
-If you are interested in using Blot're.py for sensors, it's helpful to running your scripts as daemons and starting them on boot. I've included a sample init.d script in [the source][src] based on [this post](http://blog.scphillips.com/posts/2013/07/getting-a-python-script-to-run-in-the-background-as-a-service-on-boot/).
+## Starting on Boot
+If you are interested in using Blot're.py for sensors, it's helpful to run your scripts as daemons and starting them on boot. I've included a sample init.d script in [the source][src] based on [this post](http://blog.scphillips.com/posts/2013/07/getting-a-python-script-to-run-in-the-background-as-a-service-on-boot/).
 
 ```bash
 !/bin/sh
@@ -243,14 +243,14 @@ if [ true != "$INIT_D_SCRIPT_SOURCED" ] ; then
     set "$0" "$@"; INIT_D_SCRIPT_SOURCED=true . /lib/init/init-d-script
 fi
 
-### BEGIN INIT INFO
+## BEGIN INIT INFO
 # Provides:          plantre
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Blot're soil moisture sensor.
-### END INIT INFO
+## END INIT INFO
 
 # Update to point to where script `main.py` lives.
 DIR=/home/blotre/plantre
@@ -297,7 +297,7 @@ To use this script be sure to:
 
 * Update `DIR` to point to where your copy of `main.py` lives.
 * Copy it into `/etc/init`
-* Make sure both all scripts are executable.
+* Make sure all scripts are executable.
 * Run `sudo update-rc.d plantre.init.d.sh defaults` to register script to be run at init.
 
 Start or stop the script by running:
@@ -311,7 +311,7 @@ Here's the [stream from my tree](https://blot.re/s/matt/mr+tree) using this scri
 
 {% include image.html file="_DSC7976.jpg" description="Featuring production ready tupperware enclosure." %}
 
-Be sure to checkout the rest of the [example source][src] and please report any bug you find in [Blot're.py][blotre-py].
+Be sure to check out the rest of the [example source][src] and please report any bug you find in [Blot're.py][blotre-py].
 
 [blotre]: https://blot.re
 [blotre-py]: https://github.com/mattbierner/blotre-py
